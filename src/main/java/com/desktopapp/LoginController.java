@@ -16,22 +16,22 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    protected Integer id;
+    // protected Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    // public void setId(Integer id) {
+    //     this.id = id;
+    // }
 
 
-    public static Scene CreateScene(Integer id) throws Exception
+    public static Scene CreateScene() throws Exception
     {
         URL sceneUrl = LoginController.class.getResource("FirstScreen.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
-        LoginController controller = loader.getController();
-        controller.setId(id);
+        // LoginController controller = loader.getController();
+        // controller.setId(id);
         // loader.setController(controller);
 
         return scene;
@@ -41,7 +41,7 @@ public class LoginController {
     protected void initialize(URL location, ResourceBundle Respurces)
     {
 
-        this.loginButton.setText(id.toString());
+        // this.loginButton.setText(id.toString());
 
         this.loginButton.setOnAction( e -> {
             System.err.println("erro");
@@ -60,6 +60,9 @@ public class LoginController {
 
     @FXML
     protected PasswordField passwordInput;
+
+    @FXML
+    protected TextField passwordVisibleInput;
 
     @FXML
     protected void onButtonClick(MouseEvent e) throws Exception
@@ -107,5 +110,21 @@ public class LoginController {
         }
         
             
+    }
+
+    @FXML
+    protected void changeVisibility(MouseEvent e) throws Exception
+    {
+        if (visibilityButton.isSelected()) {
+            passwordInput.setText(passwordVisibleInput.getText());
+            passwordInput.setVisible(true);
+            passwordVisibleInput.setVisible(false);
+
+        } else {
+            passwordVisibleInput.setText(passwordInput.getText());
+            passwordVisibleInput.setVisible(true);
+            passwordInput.setVisible(false);
+        }
+
     }
 }

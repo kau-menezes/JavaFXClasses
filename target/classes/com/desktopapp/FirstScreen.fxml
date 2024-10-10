@@ -77,7 +77,8 @@
                   </Label>
                   <TextField fx:id="emailInput" layoutX="103.0" layoutY="69.0" prefHeight="25.0" prefWidth="217.0" promptText="Type your email..." />
                   <PasswordField fx:id="passwordInput" layoutX="103.0" layoutY="116.0" prefHeight="25.0" prefWidth="217.0" promptText="Type your password..." />
-                  <CheckBox fx:id="visibilityButton" layoutX="32.0" layoutY="156.0" mnemonicParsing="false" text="See password 👁" textFill="#5353ec">
+                  <TextField fx:id="passwordVisibleInput" layoutX="103.0" layoutY="116.0" prefHeight="25.0" prefWidth="217.0" promptText="Type your password..." />
+                  <CheckBox fx:id="visibilityButton" layoutX="32.0" layoutY="156.0" mnemonicParsing="false" onMouseClicked="#changeVisibility" text="See password 👁" textFill="#5353ec">
                      <font>
                         <Font name="Bosch Sans Bold" size="12.0" />
                      </font>

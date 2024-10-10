@@ -14,13 +14,19 @@ import javafx.stage.Stage;
 public class InteractionWarningController {
 
     protected String message;
+    private Stage stage;
 
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     public void setMessage(String message) {
         this.message = message;
+        
     }
 
-    public static Scene CreateScene(String message) throws Exception
+    public static Scene CreateScene(String message, Stage stage) throws Exception
     {
         URL sceneUrl = InteractionWarningController.class.getResource("InteractionWarning.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
@@ -29,6 +35,7 @@ public class InteractionWarningController {
         
         InteractionWarningController controller = loader.getController();
         controller.setMessage(message);
+        controller.setStage(stage);
         
         controller.messageText.setText(message);
 
@@ -46,8 +53,27 @@ public class InteractionWarningController {
     @FXML
     protected Text messageText;
 
-    public void onButtonClick(MouseEvent e) throws Exception {
-        
+    @FXML
+    protected void onDeny(MouseEvent e) throws Exception
+    {
+        Stage crrStage = (Stage) denyButton.getScene().getWindow();
+
+        crrStage.close();
+    }
+
+    @FXML
+    protected void onConfirm(MouseEvent e) throws Exception
+    {
+        Stage crrStage = (Stage) confirmButton.getScene().getWindow();
+
+        crrStage.close(); 
+        this.stage.close();
+
+        Scene nextScene = LoginController.CreateScene();
+        Stage nextStage = new Stage();
+        nextStage.setScene(nextScene);
+        nextStage.show();
+    
     }
 
 
