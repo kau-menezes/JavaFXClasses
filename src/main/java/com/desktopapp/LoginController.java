@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 
 import java.util.ResourceBundle;
 
+import com.desktopapp.model.User;
+
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -71,27 +73,30 @@ public class LoginController {
 
         System.out.println(this.emailInput.getText());
         System.out.println(this.passwordInput.getText());
+
+        Context newContext = new Context();
+
+        var query = newContext.createQuery(User.class, "from User u where u.name = :name");
+        query.setParameter("name", this.emailInput.getText());
+        var users = query.getResultList();
         
-        
-        String message = "";
+        String message = "Incorret email or password! ☹️";
         Boolean flag = false;
         
-        if (this.emailInput.getText().equals("adm") && this.passwordInput.getText().equals("adm")) {
-            message = "Succesfull login, welcome! 😊";
-            flag = true;
-            
-        } else {
-            
-            message = "Incorret email or password! ☹️";
-            }
-            
+        if (users.size() > 0) {
+
+            if (this.passwordInput.getText().equals(users.get(0).getPassword())) {
+                message = "Succesfull login, welcome! 😊";
+                flag = true;
+            } 
+        }
             
         Scene warningScene = LoginWarningController.CreateScene(message);
             
         if (flag) {
             crrStage.close();
 
-            Scene nextScene = HomeController.CreateScene();
+            Scene nextScene = HomeController.CreateScene(users.get(0).getName());
 
             Stage nextStage = new Stage();
             nextStage.setScene(nextScene);
@@ -117,13 +122,13 @@ public class LoginController {
     {
         if (visibilityButton.isSelected()) {
             passwordInput.setText(passwordVisibleInput.getText());
-            passwordInput.setVisible(true);
-            passwordVisibleInput.setVisible(false);
+            passwordInput.setVisible(false);
+            passwordVisibleInput.setVisible(true);
 
         } else {
             passwordVisibleInput.setText(passwordInput.getText());
-            passwordVisibleInput.setVisible(true);
-            passwordInput.setVisible(false);
+            passwordVisibleInput.setVisible(false);
+            passwordInput.setVisible(true);
         }
 
     }
