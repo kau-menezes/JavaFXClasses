@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="488.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desktopapp.RegisterController">
+<VBox prefHeight="488.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desktopapp.RegisterProductController">
   <children>
     <MenuBar prefHeight="24.0" prefWidth="770.0" VBox.vgrow="NEVER">
       <menus>
@@ -76,34 +76,34 @@
                   </Button>
                </children>
             </Pane>
-            <Button fx:id="registerButton" layoutX="289.0" layoutY="255.0" mnemonicParsing="false" onMouseClicked="#register" style="-fx-background-color: #5353ec;" text="Register" textFill="WHITE">
+            <Button fx:id="registerButton" layoutX="354.0" layoutY="251.0" mnemonicParsing="false" onMouseClicked="#register" style="-fx-background-color: #5353ec;" text="Register" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Text fill="#5353ec" layoutX="175.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register a new employee:">
+            <Text fill="#5353ec" layoutX="175.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register a new product:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Label layoutX="175.0" layoutY="132.0" text="Login">
+            <Label layoutX="175.0" layoutY="155.0" text="Login">
                <font>
                   <Font name="Bosch Sans Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="176.0" layoutY="213.0" text="Password">
+            <Label layoutX="175.0" layoutY="196.0" text="Quantity">
                <font>
                   <Font name="Bosch Sans Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="emailInput" layoutX="248.0" layoutY="128.0" prefHeight="25.0" prefWidth="217.0" promptText="Type its email..." />
-            <PasswordField fx:id="passwordInput" layoutX="249.0" layoutY="209.0" prefHeight="25.0" prefWidth="217.0" promptText="Type its password..." />
-            <Label layoutX="177.0" layoutY="171.0" text="Name">
+            <TextField fx:id="idInput" layoutX="272.0" layoutY="151.0" prefHeight="25.0" prefWidth="35.0" promptText="..." />
+            <TextField fx:id="qtInput" layoutX="272.0" layoutY="192.0" prefHeight="25.0" prefWidth="35.0" promptText="..." />
+            <Label layoutX="368.0" layoutY="155.0" text="Name">
                <font>
                   <Font name="Bosch Sans Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="nameInput" layoutX="250.0" layoutY="167.0" prefHeight="25.0" prefWidth="217.0" promptText="Type its name..." />
+            <TextField fx:id="nameInput" layoutX="418.0" layoutY="151.0" prefHeight="25.0" prefWidth="217.0" promptText="Type its name..." />
       </children>
     </AnchorPane>
   </children>

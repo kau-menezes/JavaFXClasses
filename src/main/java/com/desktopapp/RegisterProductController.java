@@ -2,7 +2,7 @@ package com.desktopapp;
 
 import java.net.URL;
 
-import com.desktopapp.model.User;
+import com.desktopapp.model.Product;
 
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class RegisterController {
+public class RegisterProductController {
 
     private String message;
 
@@ -34,22 +34,22 @@ public class RegisterController {
     protected Button homePageButton;
 
     @FXML
-    protected PasswordField passwordInput;
+    protected TextField idInput;
 
     @FXML
-    protected TextField emailInput;
+    protected TextField qtInput;
 
     @FXML
     protected TextField nameInput;
 
     public static Scene CreateScene(String message) throws Exception {
 
-        URL sceneUrl = RegisterController.class.getResource("Register.fxml");
+        URL sceneUrl = RegisterProductController.class.getResource("RegisterProduct.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        RegisterController controller = loader.getController();
+        RegisterProductController controller = loader.getController();
         controller.setMessage(message);
 
         return scene;
@@ -68,28 +68,29 @@ public class RegisterController {
 
     public void register(MouseEvent e) throws Exception {
 
-        String message = "An error occured, try again.";
-
-        if (this.emailInput.getText() == "" || this.passwordInput.getText() == "") {
-            message = "Please, enter all information needed.";
-        }
-
         Context ctx = new Context();
 
-        User user = new User();
-        user.setName(this.nameInput.getText());
-        user.setPassword(this.passwordInput.getText());
-        user.setEmail(this.emailInput.getText());
+        System.out.println("oi");
 
+        Product product = new Product();
+        product.setName(this.nameInput.getText());
+        product.setId(Long.parseLong(this.idInput.getText()));
+        product.setQuantity(Long.parseLong(this.qtInput.getText()));
+        // EntityManager em = ctx.creaEntityManager();
+
+        System.out.println("oioi");
+
+        /*
         EntityManager em = ctx.creaEntityManager();
 
         try {
             em.getTransaction().begin();
+        */
             ctx.begin();
-            ctx.save(user);
+            ctx.save(product);
             ctx.commit();
             message = "New empolyee inserted succesfully! 😊";
-
+        /*
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -101,12 +102,24 @@ public class RegisterController {
         } finally {
             em.close();
         }
+        */
+        System.out.println("oioioi");
 
-        Scene warningScene = LoginWarningController.CreateScene(message);
+
+        Scene warningScene = LoginWarningController.CreateScene("Product added to the database with success!");
 
         Stage newStage = new Stage();
         newStage.setScene(warningScene);
         newStage.show();
+
+        Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
+        crrStage.close();
+
+        Scene nextScene = HomeController.CreateScene(this.message);
+
+        Stage nextStage = new Stage();
+        nextStage.setScene(nextScene);
+        nextStage.show();
 
     }
 

@@ -65,7 +65,9 @@ public class HomeController implements Initializable {
 
         controller.greetingsText.setText("Welcome, " + message + "! 😊");
 
-        if (getProducts() != null) {
+        System.out.println("\n\n\n\n\n\n" + getProducts());
+
+        if (getProducts().size() != 0) {
 
             controller.table.setItems(getProducts());
         }
@@ -108,8 +110,16 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    protected void registerNewProduct() {
+    protected void registerNewProduct() throws Exception {
 
+        Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
+        crrStage.close();
+
+        Scene nextScene = RegisterProductController.CreateScene(this.message);
+
+        Stage nextStage = new Stage();
+        nextStage.setScene(nextScene);
+        nextStage.show();
     }
 
 }

@@ -1,7 +1,5 @@
 package com.desktopapp;
 
-import org.hibernate.engine.jdbc.ContextualLobCreator;
-
 import com.desktopapp.model.*;
 
 import javafx.application.Application;
