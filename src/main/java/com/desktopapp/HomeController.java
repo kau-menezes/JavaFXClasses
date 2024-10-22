@@ -4,18 +4,21 @@ import java.net.URL;
 
 import java.util.*;
 
-import com.desktopapp.model.User;
+import com.desktopapp.model.Product;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class HomeController {
+public class HomeController implements Initializable {
 
     private String message;
 
@@ -33,6 +36,21 @@ public class HomeController {
     protected Button logOutButton;
 
     @FXML
+    protected Button newProductButton;
+
+    @FXML
+    protected TableView<Product> table;
+
+    @FXML
+    protected TableColumn<Product, Long> idCol;
+
+    @FXML
+    protected TableColumn<Product, String> nameCol;
+
+    @FXML
+    protected TableColumn<Product, Long> qtCol;
+
+    @FXML
     protected Button registerPageButton;
 
 
@@ -47,18 +65,9 @@ public class HomeController {
 
         controller.greetingsText.setText("Welcome, " + message + "! 😊");
 
-        Context newContext = new Context();
+        if (getProducts() != null) {
 
-        var query = newContext.createQuery(User.class, "SELECT u FROM User u").setMaxResults(20);
-        List<User> users = query.getResultList();
-
-        System.out.println(users);
-        
-        controller.usersText.setText("");
-
-        for (User user : users) {
-            controller.usersText.setText( controller.usersText.getText() + user.getName() + " - " + user.getPassword() + "\n");
-
+            controller.table.setItems(getProducts());
         }
 
         return scene;
@@ -66,9 +75,7 @@ public class HomeController {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?",
-                (Stage) logOutButton.getScene().getWindow());
-        // banana.setStage( );
+        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
         Stage warningStage = new Stage();
         warningStage.setScene(warningScene);
         warningStage.show();
@@ -77,40 +84,31 @@ public class HomeController {
     @FXML
     protected void registerNav(MouseEvent e) throws Exception {
 
-        System.out.println("chamou e caiu");
-
         Stage crrStage = (Stage) registerPageButton.getScene().getWindow();
-
-        System.out.println("chamou e caiu 2");
-
         crrStage.close();
-
-        System.out.println("chamou e caiu 3");
-
-
         Scene nextScene = RegisterController.CreateScene(this.message);
-
-        System.out.println("chamou e caiu 4");
-
-
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
         nextStage.show();
 
     }
 
-    @FXML
-    protected static void getUsers(HomeController controller) {
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("nameCol"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("idCol"));
+        qtCol.setCellValueFactory(new PropertyValueFactory<>("qtCol"));
+    }
 
+    private static ObservableList<Product> getProducts() {
         Context newContext = new Context();
+        var query = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList();
+        return FXCollections.observableArrayList(query);
 
-        var query = newContext.createQuery(User.class, "SELECT from User");
-        List<User> users = query.getResultList();
-        
+    }
 
-        for (User user : users) {
-            
-        }
+    @FXML
+    protected void registerNewProduct() {
 
     }
 
