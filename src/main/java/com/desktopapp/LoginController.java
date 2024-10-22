@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 // import javafx.scene.Parent;
 // import javafx.scene.Scene;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.desktopapp.model.User;
@@ -78,7 +79,7 @@ public class LoginController {
 
         var query = newContext.createQuery(User.class, "from User u where u.name = :name");
         query.setParameter("name", this.emailInput.getText());
-        var users = query.getResultList();
+        List<User> users = query.getResultList();
         
         String message = "Incorret email or password! ☹️";
         Boolean flag = false;

@@ -26,6 +26,7 @@ public class LoginWarningController {
 
     @FXML
     protected Text messageText;
+    
     public static Scene CreateScene(String message) throws Exception
     {
 
