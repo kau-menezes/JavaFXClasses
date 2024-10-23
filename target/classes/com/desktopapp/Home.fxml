@@ -58,17 +58,17 @@
       <children>
             <Pane prefHeight="48.0" prefWidth="770.0" style="-fx-background-color: #8c8cf2;">
                <children>
-                  <Button fx:id="homePageButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #5353ec;" text="Home" textFill="WHITE">
+                  <Button fx:id="productsPageButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #5353ec;" text="Products" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="registerPageButton" layoutX="127.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#registerNav" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #5353ec;" text="Register" textFill="WHITE">
+                  <Button fx:id="employeesPageButton" layoutX="127.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#goToEmployeesPage" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #5353ec;" text="Employees" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logOutButton" layoutX="673.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#onButtonClick" prefHeight="27.0" prefWidth="74.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #5353ec; -fx-border-radius: 4;" text="Log Out" textFill="#5353ec">
+                  <Button fx:id="logOutButton" layoutX="665.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#onButtonClick" prefHeight="27.0" prefWidth="91.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #5353ec; -fx-border-radius: 4;" text="Log Out" textFill="#5353ec">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

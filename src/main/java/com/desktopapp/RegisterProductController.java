@@ -29,13 +29,10 @@ public class RegisterProductController {
     protected Button registerButton;
 
     @FXML
-    protected Button registerPageButton;
+    protected Button employeesPageButton;
 
     @FXML
-    protected Button homePageButton;
-
-    @FXML
-    protected TextField idInput;
+    protected Button productsPageButton;
 
     @FXML
     protected TextField qtInput;
@@ -75,7 +72,6 @@ public class RegisterProductController {
 
         Product product = new Product();
         product.setName(this.nameInput.getText());
-        // product.setId(Long.parseLong(this.idInput.getText()));
         product.setQuantity(Long.parseLong(this.qtInput.getText()));
         // EntityManager em = ctx.creaEntityManager();
 
@@ -108,7 +104,7 @@ public class RegisterProductController {
 
     public void homeNav(MouseEvent e) throws Exception {
 
-        Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
+        Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
         Scene nextScene = HomeController.CreateScene(this.message);

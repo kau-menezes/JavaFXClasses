@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
     protected TableColumn<Product, Long> qtCol;
 
     @FXML
-    protected Button registerPageButton;
+    protected Button employeesPageButton;
 
 
     public static Scene CreateScene(String message) throws Exception {
@@ -84,9 +84,9 @@ public class HomeController implements Initializable {
 
     }
     @FXML
-    protected void registerNav(MouseEvent e) throws Exception {
+    protected void goToEmployeesPage(MouseEvent e) throws Exception {
 
-        Stage crrStage = (Stage) registerPageButton.getScene().getWindow();
+        Stage crrStage = (Stage) employeesPageButton.getScene().getWindow();
         crrStage.close();
         Scene nextScene = RegisterController.CreateScene(this.message);
         Stage nextStage = new Stage();
@@ -112,7 +112,7 @@ public class HomeController implements Initializable {
     @FXML
     protected void registerNewProduct() throws Exception {
 
-        Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
+        Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
         Scene nextScene = RegisterProductController.CreateScene(this.message);
