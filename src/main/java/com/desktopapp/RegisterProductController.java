@@ -107,7 +107,7 @@ public class RegisterProductController {
         Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = HomeController.CreateScene(this.message);
+        Scene nextScene = ProductsController.CreateScene(this.message);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);

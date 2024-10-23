@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class RegisterController {
+public class RegisterEmployeeController {
 
     private String message;
 
@@ -44,12 +44,12 @@ public class RegisterController {
 
     public static Scene CreateScene(String message) throws Exception {
 
-        URL sceneUrl = RegisterController.class.getResource("Register.fxml");
+        URL sceneUrl = RegisterEmployeeController.class.getResource("RegisterEmployee.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        RegisterController controller = loader.getController();
+        RegisterEmployeeController controller = loader.getController();
         controller.setMessage(message);
 
         return scene;
@@ -115,7 +115,7 @@ public class RegisterController {
         Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = HomeController.CreateScene(this.message);
+        Scene nextScene = ProductsController.CreateScene(this.message);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.desktopapp.model.Product;
+import com.desktopapp.model.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class HomeController implements Initializable {
+public class EmployeesController implements Initializable {
 
     private String message;
 
@@ -36,40 +37,38 @@ public class HomeController implements Initializable {
     protected Button logOutButton;
 
     @FXML
-    protected Button newProductButton;
+    protected Button newEmployeeButton;
 
     @FXML
-    protected TableView<Product> table;
+    protected TableView<User> table;
 
     @FXML
-    protected TableColumn<Product, Long> idCol;
+    protected TableColumn<User, Long> idCol;
 
     @FXML
-    protected TableColumn<Product, String> nameCol;
+    protected TableColumn<User, String> nameCol;
 
     @FXML
-    protected TableColumn<Product, Long> qtCol;
+    protected TableColumn<User, String> emailCol;
 
     @FXML
     protected Button employeesPageButton;
 
 
     public static Scene CreateScene(String message) throws Exception {
-        URL sceneUrl = HomeController.class.getResource("Home.fxml");
+        URL sceneUrl = EmployeesController.class.getResource("Employees.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        HomeController controller = loader.getController();
+        EmployeesController controller = loader.getController();
         controller.setMessage(message);
 
         controller.greetingsText.setText("Welcome, " + message + "! 😊");
+        
+        if (getEmployees().size() != 0) {
 
-        System.out.println("\n\n\n\n\n\n" + getProducts());
-
-        if (getProducts().size() != 0) {
-
-            controller.table.setItems(getProducts());
+            controller.table.setItems(getEmployees());
         }
 
         return scene;
@@ -84,38 +83,49 @@ public class HomeController implements Initializable {
 
     }
     @FXML
-    protected void goToEmployeesPage(MouseEvent e) throws Exception {
+    protected void goToProductsPage(MouseEvent e) throws Exception {
 
+        System.out.println("oi");
         Stage crrStage = (Stage) employeesPageButton.getScene().getWindow();
+        System.out.println("oi");
+        
         crrStage.close();
-        Scene nextScene = RegisterController.CreateScene(this.message);
+        System.out.println("oi");
+        
+        Scene nextScene = ProductsController.CreateScene(this.message);
+        System.out.println("oi");
+        
         Stage nextStage = new Stage();
+        System.out.println("oi");
+        
         nextStage.setScene(nextScene);
         nextStage.show();
 
     }
 
+    
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        qtCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
 
-    private static ObservableList<Product> getProducts() {
+    private static ObservableList<User> getEmployees() {
         Context newContext = new Context();
-        var query = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList();
+        var query = newContext.createQuery(User.class, "SELECT u FROM User u").setMaxResults(20).getResultList();
         return FXCollections.observableArrayList(query);
 
     }
 
     @FXML
-    protected void registerNewProduct() throws Exception {
+    protected void registerNewEmployee() throws Exception {
 
         Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = RegisterProductController.CreateScene(this.message);
+        Scene nextScene = RegisterEmployeeController.CreateScene(this.message);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
