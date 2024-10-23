@@ -95,6 +95,8 @@
                   </Text>
                </children>
             </Pane>
+            <Text layoutX="142.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Primeiro acesso:" />
+            <Text layoutX="142.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login: &quot;&quot;        Password: &quot;&quot;" />
       </children>
     </AnchorPane>
   </children>

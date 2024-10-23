@@ -16,6 +16,16 @@ import javafx.stage.Stage;
 
 public class RegisterProductController {
 
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     private String message;
 
     public void setMessage(String message) {
@@ -49,6 +59,24 @@ public class RegisterProductController {
 
         RegisterProductController controller = loader.getController();
         controller.setMessage(message);
+
+        return scene;
+    }
+
+    public static Scene CreateScene(String message, Product product) throws Exception {
+
+        URL sceneUrl = RegisterProductController.class.getResource("RegisterProduct.fxml");
+
+        FXMLLoader loader = new FXMLLoader(sceneUrl);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        RegisterProductController controller = loader.getController();
+        controller.setMessage(message);
+        controller.setProduct(product);
+
+        controller.qtInput.setText(product.getQuantity().toString());
+        controller.nameInput.setText(product.getName());
 
         return scene;
     }

@@ -2,6 +2,7 @@ package com.desktopapp;
 
 import java.net.URL;
 
+import com.desktopapp.model.Product;
 import com.desktopapp.model.User;
 
 import jakarta.persistence.EntityManager;
