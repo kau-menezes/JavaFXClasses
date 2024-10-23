@@ -3,6 +3,7 @@ package com.desktopapp;
 import java.net.URL;
 
 import com.desktopapp.model.Product;
+import com.desktopapp.model.User;
 
 import jakarta.persistence.EntityManager;
 import javafx.fxml.FXML;
@@ -68,58 +69,40 @@ public class RegisterProductController {
 
     public void register(MouseEvent e) throws Exception {
 
-        Context ctx = new Context();
+        String message = "An error occured, try again.";
 
-        System.out.println("oi");
+        Context ctx = new Context();
 
         Product product = new Product();
         product.setName(this.nameInput.getText());
-        product.setId(Long.parseLong(this.idInput.getText()));
+        // product.setId(Long.parseLong(this.idInput.getText()));
         product.setQuantity(Long.parseLong(this.qtInput.getText()));
         // EntityManager em = ctx.creaEntityManager();
 
-        System.out.println("oioi");
-
-        /*
-        EntityManager em = ctx.creaEntityManager();
-
-        try {
-            em.getTransaction().begin();
-        */
+        // try {
+            // em.getTransaction().begin();
             ctx.begin();
             ctx.save(product);
             ctx.commit();
-            message = "New empolyee inserted succesfully! 😊";
-        /*
-        } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+            message = "New product inserted succesfully! 😊";
 
-            ex.printStackTrace();
-            em = null;
+        // } catch (Exception ex) {
+        //     if (em.getTransaction().isActive()) {
+        //         em.getTransaction().rollback();
+        //     }
 
-        } finally {
-            em.close();
-        }
-        */
-        System.out.println("oioioi");
+        //     ex.printStackTrace();
+        //     em = null;
 
+        // } finally {
+        //     em.close();
+        // }
 
-        Scene warningScene = LoginWarningController.CreateScene("Product added to the database with success!");
+        Scene warningScene = LoginWarningController.CreateScene(message);
 
         Stage newStage = new Stage();
         newStage.setScene(warningScene);
         newStage.show();
-
-        Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
-        crrStage.close();
-
-        Scene nextScene = HomeController.CreateScene(this.message);
-
-        Stage nextStage = new Stage();
-        nextStage.setScene(nextScene);
-        nextStage.show();
 
     }
 

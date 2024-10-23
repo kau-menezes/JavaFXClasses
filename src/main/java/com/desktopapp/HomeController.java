@@ -97,9 +97,9 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("nameCol"));
-        idCol.setCellValueFactory(new PropertyValueFactory<>("idCol"));
-        qtCol.setCellValueFactory(new PropertyValueFactory<>("qtCol"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        qtCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     }
 
     private static ObservableList<Product> getProducts() {

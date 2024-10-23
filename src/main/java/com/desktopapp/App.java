@@ -12,8 +12,8 @@ public class App extends Application{
         // launch(args);
 
         User user = new User();
-        user.setName("amorinha");
-        user.setPassword("senha");
+        user.setName("");
+        user.setPassword("");
 
         Context ctx = new Context();
         ctx.begin();
