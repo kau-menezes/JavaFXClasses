@@ -97,7 +97,7 @@ public class LoginController {
         if (flag) {
             crrStage.close();
 
-            Scene nextScene = ProductsController.CreateScene(users.get(0).getName());
+            Scene nextScene = ProductsController.CreateScene(users.get(0));
 
             Stage nextStage = new Stage();
             nextStage.setScene(nextScene);

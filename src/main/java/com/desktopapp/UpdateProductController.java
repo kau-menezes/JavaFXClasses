@@ -13,12 +13,26 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class RegisterProductController {
+public class UpdateProductController {
 
-    private User user;
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @FXML
@@ -39,15 +53,20 @@ public class RegisterProductController {
     @FXML
     protected TextField nameInput;
 
-    public static Scene CreateScene(User user) throws Exception {
+    public static Scene CreateScene(User user, Product product) throws Exception {
 
-        URL sceneUrl = RegisterProductController.class.getResource("RegisterProduct.fxml");
+        URL sceneUrl = UpdateProductController.class.getResource("UpdateProduct.fxml");
+
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        RegisterProductController controller = loader.getController();
+        UpdateProductController controller = loader.getController();
+        controller.setProduct(product);
         controller.setUser(user);
+
+        controller.qtInput.setText(product.getQuantity().toString());
+        controller.nameInput.setText(product.getName());
 
         return scene;
     }
@@ -65,37 +84,31 @@ public class RegisterProductController {
 
     }
 
-    public void register(MouseEvent e) throws Exception {
+    public void update(MouseEvent e) throws Exception {
 
         String message = "An error occured, try again.";
 
         Context ctx = new Context();
 
-        Product product = new Product();
-        product.setName(this.nameInput.getText());
-        product.setQuantity(Long.parseLong(this.qtInput.getText()));
-        // EntityManager em = ctx.creaEntityManager();
+        product.setName(nameInput.getText());
+        product.setQuantity(Long.parseLong(qtInput.getText()));
 
-        // try {
-            // em.getTransaction().begin();
-            ctx.begin();
-            ctx.save(product);
-            ctx.commit();
-            message = "New product inserted succesfully! 😊";
+        ctx.begin();
+        ctx.update(product);
+        ctx.commit();
 
-        // } catch (Exception ex) {
-        //     if (em.getTransaction().isActive()) {
-        //         em.getTransaction().rollback();
-        //     }
-
-        //     ex.printStackTrace();
-        //     em = null;
-
-        // } finally {
-        //     em.close();
-        // }
+        message = "Product updated successfully! 😊";
 
         Scene warningScene = LoginWarningController.CreateScene(message);
+
+        Stage crrStage = (Stage) registerButton.getScene().getWindow();
+        crrStage.close();
+
+        Scene nextScene = ProductsController.CreateScene(user);
+
+        Stage nextStage = new Stage();
+        nextStage.setScene(nextScene);
+        nextStage.show();
 
         Stage newStage = new Stage();
         newStage.setScene(warningScene);
@@ -109,7 +122,6 @@ public class RegisterProductController {
         crrStage.close();
 
         Scene nextScene = ProductsController.CreateScene(user);
-
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
         nextStage.show();

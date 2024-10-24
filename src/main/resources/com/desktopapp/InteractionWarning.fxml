@@ -59,7 +59,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="denyButton" layoutX="154.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#onDeny" style="-fx-background-color: gray;" text="No" textFill="WHITE">
+            <Button fx:id="denyButton" layoutX="154.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#onDeny" prefHeight="25.0" prefWidth="36.0" style="-fx-background-color: gray;" text="No" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

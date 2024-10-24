@@ -4,7 +4,6 @@ import java.net.URL;
 
 import java.util.*;
 
-import com.desktopapp.model.Product;
 import com.desktopapp.model.User;
 
 import javafx.collections.FXCollections;
@@ -21,10 +20,10 @@ import javafx.stage.Stage;
 
 public class EmployeesController implements Initializable {
 
-    private String message;
+    private User user;
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @FXML
@@ -55,16 +54,16 @@ public class EmployeesController implements Initializable {
     protected Button employeesPageButton;
 
 
-    public static Scene CreateScene(String message) throws Exception {
+    public static Scene CreateScene(User user) throws Exception {
         URL sceneUrl = EmployeesController.class.getResource("Employees.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
         EmployeesController controller = loader.getController();
-        controller.setMessage(message);
+        controller.setUser(user);
 
-        controller.greetingsText.setText("Welcome, " + message + "! 😊");
+        controller.greetingsText.setText("Welcome, " + user.getName() + "! 😊");
         
         if (getEmployees().size() != 0) {
 
@@ -76,7 +75,7 @@ public class EmployeesController implements Initializable {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
+        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
         Stage warningStage = new Stage();
         warningStage.setScene(warningScene);
         warningStage.show();
@@ -92,7 +91,7 @@ public class EmployeesController implements Initializable {
         crrStage.close();
         System.out.println("oi");
         
-        Scene nextScene = ProductsController.CreateScene(this.message);
+        Scene nextScene = ProductsController.CreateScene(user);
         System.out.println("oi");
         
         Stage nextStage = new Stage();
@@ -125,7 +124,7 @@ public class EmployeesController implements Initializable {
         Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = RegisterEmployeeController.CreateScene(this.message);
+        Scene nextScene = RegisterEmployeeController.CreateScene(user);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);

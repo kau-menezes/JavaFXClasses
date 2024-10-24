@@ -68,6 +68,39 @@ public class Context {
         return user;
     }
 
+    public void update(Object object) {
+        if (em == null) {
+            System.out.println("connection is null.");
+            return;
+        }
+        try {
+            em.merge(object);
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            em = null;
+        } 
+    }
+
+    public void delete(Object object) {
+        if (em == null) {
+            System.out.println("connection is null.");
+            return;
+        }
+        try {
+            em.remove(em.contains(object) ? object : em.merge(object));
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            em = null;
+        } 
+    }
+
     public void save(Object object) {
         if (em == null) {
             System.out.println("connection is null.");

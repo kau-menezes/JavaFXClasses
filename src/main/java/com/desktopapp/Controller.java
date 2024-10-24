@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class InteractionWarningController{
+public class Controller {
 
     protected String message;
     private Stage stage;

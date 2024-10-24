@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.desktopapp.model.Product;
+import com.desktopapp.model.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,19 +21,19 @@ import javafx.stage.Stage;
 
 public class ProductsController implements Initializable {
 
-    private String username;
+    private User user;
 
-    public void setUsername(String message) {
-        this.username = message;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    private Long selectedId;
+    private Integer selectedId;
 
-    public Long getSelectedId() {
+    public Integer getSelectedId() {
         return selectedId;
     }
 
-    public void setSelectedId(Long selectedId) {
+    public void setSelectedId(Integer selectedId) {
         this.selectedId = selectedId;
     }
 
@@ -70,16 +71,16 @@ public class ProductsController implements Initializable {
     protected Button employeesPageButton;
 
 
-    public static Scene CreateScene(String username) throws Exception {
+    public static Scene CreateScene(User user) throws Exception {
         URL sceneUrl = ProductsController.class.getResource("Home.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
         ProductsController controller = loader.getController();
-        controller.setUsername(username);
+        controller.setUser(user);
 
-        controller.greetingsText.setText("Welcome, " + username + "! 😊");
+        controller.greetingsText.setText("Welcome, " + user.getName() + "! 😊");
 
         System.out.println("\n\n\n\n\n\n" + getProducts());
 
@@ -93,7 +94,9 @@ public class ProductsController implements Initializable {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
+        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+
+        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
         Stage warningStage = new Stage();
         warningStage.setScene(warningScene);
         warningStage.show();
@@ -104,7 +107,7 @@ public class ProductsController implements Initializable {
 
         Stage crrStage = (Stage) employeesPageButton.getScene().getWindow();
         crrStage.close();
-        Scene nextScene = EmployeesController.CreateScene(this.username);
+        Scene nextScene = EmployeesController.CreateScene(user);
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
         nextStage.show();
@@ -152,7 +155,7 @@ public class ProductsController implements Initializable {
         Stage crrStage = (Stage) this.employeesPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = RegisterProductController.CreateScene(this.username);
+        Scene nextScene = RegisterProductController.CreateScene(user);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
@@ -166,13 +169,31 @@ public class ProductsController implements Initializable {
         crrStage.close();
 
         Context newContext = new Context();
-        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(0);
+        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(selectedId - 1);
 
-        Scene nextScene = RegisterProductController.CreateScene("Edit product: ", cell);
+        Scene nextScene = UpdateProductController.CreateScene(user, cell);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
         nextStage.show();
+    }
+
+    @FXML
+    protected void deleteProduct() throws Exception {
+
+        Context ctx = new Context();
+
+        Context newContext = new Context();
+        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(0);
+
+        ctx.begin();
+        ctx.delete(cell);
+        ctx.commit();
+
+        table.setItems(getProducts());
+
+
+
     }
 
 }

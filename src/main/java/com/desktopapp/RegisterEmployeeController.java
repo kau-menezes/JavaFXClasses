@@ -2,7 +2,6 @@ package com.desktopapp;
 
 import java.net.URL;
 
-import com.desktopapp.model.Product;
 import com.desktopapp.model.User;
 
 import jakarta.persistence.EntityManager;
@@ -16,10 +15,10 @@ import javafx.stage.Stage;
 
 public class RegisterEmployeeController {
 
-    private String message;
+    private User user;
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @FXML
@@ -43,7 +42,7 @@ public class RegisterEmployeeController {
     @FXML
     protected TextField nameInput;
 
-    public static Scene CreateScene(String message) throws Exception {
+    public static Scene CreateScene(User user) throws Exception {
 
         URL sceneUrl = RegisterEmployeeController.class.getResource("RegisterEmployee.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
@@ -51,15 +50,16 @@ public class RegisterEmployeeController {
         Scene scene = new Scene(root);
 
         RegisterEmployeeController controller = loader.getController();
-        controller.setMessage(message);
+        controller.setUser(user);
 
         return scene;
     }
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?",
-        (Stage) logOutButton.getScene().getWindow());
+        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?",(Stage) logOutButton.getScene().getWindow());
+        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+
         // banana.setStage( );
         Stage warningStage = new Stage();
         warningStage.setScene(warningScene);
@@ -116,7 +116,7 @@ public class RegisterEmployeeController {
         Stage crrStage = (Stage) this.registerPageButton.getScene().getWindow();
         crrStage.close();
 
-        Scene nextScene = ProductsController.CreateScene(this.message);
+        Scene nextScene = EmployeesController.CreateScene(user);
 
         Stage nextStage = new Stage();
         nextStage.setScene(nextScene);
