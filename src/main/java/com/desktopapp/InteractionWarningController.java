@@ -16,6 +16,11 @@ public class InteractionWarningController{
     protected String message;
     private Stage stage;
     private Scene scene;
+    private boolean isConfirm = false;
+
+    public boolean isConfirm() {
+        return isConfirm;
+    }
 
     public Scene getScene() {
         return scene;
@@ -34,7 +39,7 @@ public class InteractionWarningController{
         
     }
 
-    public static Scene CreateScene(String message, Stage stage, Scene foreignScene) throws Exception
+    public static boolean ShowAndWait(String message, Stage stage) throws Exception
     {
         URL sceneUrl = InteractionWarningController.class.getResource("InteractionWarning.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
@@ -44,13 +49,14 @@ public class InteractionWarningController{
         InteractionWarningController controller = loader.getController();
         controller.setMessage(message);
         controller.setStage(stage);
-        controller.setScene(foreignScene);
         
         controller.messageText.setText(message);
 
-        System.out.println(controller.message);
+        Stage warningStage = new Stage();
+        warningStage.setScene(scene);
+        warningStage.showAndWait();
 
-        return scene;
+        return controller.isConfirm();
     }
 
     @FXML
@@ -73,21 +79,9 @@ public class InteractionWarningController{
     @FXML
     protected void onConfirm(MouseEvent e) throws Exception
     {
+        isConfirm = true;
         Stage crrStage = (Stage) confirmButton.getScene().getWindow();
-
-        crrStage.close(); 
-        this.stage.close();
-
-        // Scene nextScene = LoginController.CreateScene();
-        Stage nextStage = new Stage();
-        nextStage.setScene(this.scene);
-        nextStage.show();
-    
+        crrStage.close();
     }
-
-
-
-
-
     
 }

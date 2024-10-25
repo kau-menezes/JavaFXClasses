@@ -94,12 +94,10 @@ public class ProductsController implements Initializable {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
 
         // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
-        Stage warningStage = new Stage();
-        warningStage.setScene(warningScene);
-        warningStage.show();
+
 
     }
     @FXML

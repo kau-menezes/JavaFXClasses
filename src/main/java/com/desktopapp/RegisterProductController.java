@@ -56,12 +56,12 @@ public class RegisterProductController {
 
         // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
 
-        Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
 
-        // banana.setStage( );
-        Stage warningStage = new Stage();
-        warningStage.setScene(warningScene);
-        warningStage.show();
+        // // banana.setStage( );
+        // Stage warningStage = new Stage();
+        // warningStage.setScene(warningScene);
+        // warningStage.show();
 
     }
 
