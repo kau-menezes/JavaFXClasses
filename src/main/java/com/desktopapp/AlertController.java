@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoginWarningController {
+public class AlertController {
 
 
     protected String message;
@@ -30,12 +30,12 @@ public class LoginWarningController {
     public static Scene CreateScene(String message) throws Exception
     {
 
-        URL sceneUrl = LoginWarningController.class.getResource("LoginWarningStage.fxml");
+        URL sceneUrl = AlertController.class.getResource("Alert.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
-        LoginWarningController controller = loader.getController();
+        AlertController controller = loader.getController();
         controller.setMessage(message);
         
         controller.messageText.setText(message);

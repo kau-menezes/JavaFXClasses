@@ -27,21 +27,44 @@ public class ProductsController implements Initializable {
         this.user = user;
     }
 
-    private Integer selectedId;
+    private String selectedId;
 
-    public Integer getSelectedId() {
+    public String getSelectedId() {
         return selectedId;
     }
 
-    public void setSelectedId(Integer selectedId) {
+    public void setSelectedId(String selectedId) {
         this.selectedId = selectedId;
+        selectedProduct.setText(selectedId);
+    }
+
+    private String checkedOption;
+
+    public String getCheckedOption() {
+        return checkedOption;
+    }
+
+    public void setCheckedOption(String checkedOption) {
+        this.checkedOption = checkedOption;
     }
 
     @FXML
     protected Text greetingsText;
 
     @FXML
+    protected Text warningFilterText;
+
+    @FXML
     protected Text selectedProduct;
+
+    @FXML
+    protected TextField filterInput;
+
+    @FXML
+    protected CheckBox qtFilterCheckBox;
+
+    @FXML
+    protected CheckBox nameFilterCheckBox;
 
     @FXML
     protected Button logOutButton;
@@ -70,6 +93,12 @@ public class ProductsController implements Initializable {
     @FXML
     protected Button employeesPageButton;
 
+    @FXML
+    protected Button filterButton;
+
+    @FXML
+    protected Button unfilterButton;
+
 
     public static Scene CreateScene(User user) throws Exception {
         URL sceneUrl = ProductsController.class.getResource("Home.fxml");
@@ -79,6 +108,7 @@ public class ProductsController implements Initializable {
 
         ProductsController controller = loader.getController();
         controller.setUser(user);
+        controller.setCheckedOption("");
 
         controller.greetingsText.setText("Welcome, " + user.getName() + "! 😊");
 
@@ -92,14 +122,46 @@ public class ProductsController implements Initializable {
         return scene;
     }
 
-    public void onButtonClick(MouseEvent e) throws Exception {
+    
+    public void setNameFilterOption (MouseEvent e) throws Exception {
+        setCheckedOption("name");
+        this.qtFilterCheckBox.setSelected(false);
+    }
 
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
-
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
-
+    public void setQtFilterOption (MouseEvent e) throws Exception {
+        setCheckedOption("quantity");
+        this.nameFilterCheckBox.setSelected(false);
 
     }
+
+    public void unfilterProducts (MouseEvent e) throws Exception {
+        this.table.setItems(getProducts());
+        this.nameFilterCheckBox.setSelected(false);
+        this.qtFilterCheckBox.setSelected(false);
+
+    }
+
+
+
+    public void onButtonClick(MouseEvent e) throws Exception {
+
+        var confirm = InteractionWarningController.ShowAndWait(
+            "Are you sure you want to log out?"
+        );
+
+        if (confirm)
+        {
+            Stage crrStage = (Stage) logOutButton.getScene().getWindow();
+            crrStage.close();
+
+            Scene loginScene = LoginController.CreateScene();
+            Stage newStage = new Stage();
+            newStage.setScene(loginScene);
+            newStage.show();
+        }
+
+    }
+
     @FXML
     protected void goToEmployeesPage(MouseEvent e) throws Exception {
 
@@ -127,7 +189,7 @@ public class ProductsController implements Initializable {
 
         if (cell != null) {
             var crrProduct = table.getItems().get(cell.getRow());
-            setSelectedId(crrProduct.getId());
+            setSelectedId(crrProduct.getId().toString());
             selectedProduct.setText("Selected: " + getSelectedId());
             EnableActionButtons();
         }
@@ -167,7 +229,7 @@ public class ProductsController implements Initializable {
         crrStage.close();
 
         Context newContext = new Context();
-        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(selectedId - 1);
+        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(Integer.parseInt(selectedId) - 1);
 
         Scene nextScene = UpdateProductController.CreateScene(user, cell);
 
@@ -179,19 +241,51 @@ public class ProductsController implements Initializable {
     @FXML
     protected void deleteProduct() throws Exception {
 
-        Context ctx = new Context();
+        var confirm = InteractionWarningController.ShowAndWait(
+            "Are you sure you want to delete this product?"
+        );
 
-        Context newContext = new Context();
-        var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(0);
+        if (confirm)
+        {
+            Context ctx = new Context();
 
-        ctx.begin();
-        ctx.delete(cell);
-        ctx.commit();
-
-        table.setItems(getProducts());
-
-
+            Context newContext = new Context();
+            var cell = newContext.createQuery(Product.class, "SELECT p FROM Product p").setMaxResults(20).getResultList().get(0);
+    
+            ctx.begin();
+            ctx.delete(cell);
+            ctx.commit();
+    
+            table.setItems(getProducts());
+            setSelectedId("None");
+        }
 
     }
 
+    public void filterProducts(MouseEvent e) throws Exception {
+        
+        if(getCheckedOption().equals("")) {
+            warningFilterText.setVisible(true);
+
+        } else {
+            Context ctx = new Context();
+            
+            Context newContext = new Context();
+            if (getCheckedOption().equals("name")) {
+
+                var query = newContext.createQuery(Product.class, "from Product p where p.name = :filter"); // implement like
+                query.setParameter("filter", this.filterInput.getText());
+                var products = query.getResultList();
+                this.table.setItems(FXCollections.observableArrayList(products));
+            } else {
+                var query = newContext.createQuery(Product.class, "from Product p where p.quantity = :filter"); // implement like
+                query.setParameter("filter", this.filterInput.getText());
+                var products = query.getResultList();
+                this.table.setItems(FXCollections.observableArrayList(products));
+            }
+
+
+        }
+
+    }
 }

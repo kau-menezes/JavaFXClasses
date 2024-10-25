@@ -76,30 +76,28 @@ public class EmployeesController implements Initializable {
     public void onButtonClick(MouseEvent e) throws Exception {
 
         var confirm = InteractionWarningController.ShowAndWait(
-            "Are you sure you want to log out?", 
-            (Stage)logOutButton.getScene().getWindow()
+            "Are you sure you want to log out?"
         );
 
         if (confirm)
         {
-            System.err.println("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
+            Stage crrStage = (Stage) logOutButton.getScene().getWindow();
+            crrStage.close();
+
+            Scene loginScene = LoginController.CreateScene();
+            Stage newStage = new Stage();
+            newStage.setScene(loginScene);
+            newStage.show();
         }
     }
     @FXML
     protected void goToProductsPage(MouseEvent e) throws Exception {
 
-        System.out.println("oi");
         Stage crrStage = (Stage) employeesPageButton.getScene().getWindow();
-        System.out.println("oi");
-        
         crrStage.close();
-        System.out.println("oi");
         
         Scene nextScene = ProductsController.CreateScene(user);
-        System.out.println("oi");
-        
         Stage nextStage = new Stage();
-        System.out.println("oi");
         
         nextStage.setScene(nextScene);
         nextStage.show();

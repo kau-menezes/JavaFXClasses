@@ -20,8 +20,6 @@ public class App extends Application{
         ctx.save(user);
         ctx.commit();
 
-    
-
         launch(args);
 
     }

@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 public class InteractionWarningController{
 
     protected String message;
-    private Stage stage;
     private Scene scene;
     private boolean isConfirm = false;
 
@@ -30,16 +29,12 @@ public class InteractionWarningController{
         this.scene = scene;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     public void setMessage(String message) {
         this.message = message;
         
     }
 
-    public static boolean ShowAndWait(String message, Stage stage) throws Exception
+    public static boolean ShowAndWait(String message) throws Exception
     {
         URL sceneUrl = InteractionWarningController.class.getResource("InteractionWarning.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
@@ -48,7 +43,6 @@ public class InteractionWarningController{
         
         InteractionWarningController controller = loader.getController();
         controller.setMessage(message);
-        controller.setStage(stage);
         
         controller.messageText.setText(message);
 

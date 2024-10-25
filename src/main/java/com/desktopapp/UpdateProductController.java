@@ -73,14 +73,21 @@ public class UpdateProductController {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow());
+        var confirm = InteractionWarningController.ShowAndWait(
+            "Are you sure you want to log out?"
+        );
 
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+        if (confirm)
+        {
+            Stage crrStage = (Stage) logOutButton.getScene().getWindow();
+            crrStage.close();
 
-        // // banana.setStage( );
-        // Stage warningStage = new Stage();
-        // warningStage.setScene(warningScene);
-        // warningStage.show();
+            Scene loginScene = LoginController.CreateScene();
+            Stage newStage = new Stage();
+            newStage.setScene(loginScene);
+            newStage.show();
+            
+        }
 
     }
 
@@ -99,7 +106,7 @@ public class UpdateProductController {
 
         message = "Product updated successfully! 😊";
 
-        Scene warningScene = LoginWarningController.CreateScene(message);
+        Scene warningScene = AlertController.CreateScene(message);
 
         Stage crrStage = (Stage) registerButton.getScene().getWindow();
         crrStage.close();

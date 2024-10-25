@@ -57,13 +57,20 @@ public class RegisterEmployeeController {
 
     public void onButtonClick(MouseEvent e) throws Exception {
 
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?",(Stage) logOutButton.getScene().getWindow());
-        // Scene warningScene = InteractionWarningController.CreateScene("Are you sure you want to log out?", (Stage) logOutButton.getScene().getWindow(), LoginController.CreateScene());
+        var confirm = InteractionWarningController.ShowAndWait(
+            "Are you sure you want to log out?"
+        );
 
-        // banana.setStage( );
-        // Stage warningStage = new Stage();
-        // warningStage.setScene(warningScene);
-        // warningStage.show();
+        if (confirm)
+        {
+            Stage crrStage = (Stage) logOutButton.getScene().getWindow();
+            crrStage.close();
+
+            Scene loginScene = LoginController.CreateScene();
+            Stage newStage = new Stage();
+            newStage.setScene(loginScene);
+            newStage.show();
+        }
 
     }
 
@@ -103,7 +110,7 @@ public class RegisterEmployeeController {
             em.close();
         }
 
-        Scene warningScene = LoginWarningController.CreateScene(message);
+        Scene warningScene = AlertController.CreateScene(message);
 
         Stage newStage = new Stage();
         newStage.setScene(warningScene);

@@ -19,24 +19,13 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    // protected Integer id;
-
-    // public void setId(Integer id) {
-    //     this.id = id;
-    // }
-
-
     public static Scene CreateScene() throws Exception
     {
-        URL sceneUrl = LoginController.class.getResource("FirstScreen.fxml");
+        URL sceneUrl = LoginController.class.getResource("Login.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
-        // LoginController controller = loader.getController();
-        // controller.setId(id);
-        // loader.setController(controller);
-
         return scene;
     }
 
@@ -92,7 +81,7 @@ public class LoginController {
             } 
         }
             
-        Scene warningScene = LoginWarningController.CreateScene(message);
+        Scene warningScene = AlertController.CreateScene(message);
             
         if (flag) {
             crrStage.close();
